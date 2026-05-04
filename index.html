@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Juliana Limpeza Premium</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+* {
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
+
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #0f172a, #e91e63);
+}
+
+.container {
+  background: #fff;
+  padding: 25px;
+  border-radius: 14px;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+}
+
+h1 {
+  text-align: center;
+  margin: 0;
+  font-size: 20px;
+}
+
+.sub {
+  text-align: center;
+  font-size: 13px;
+  color: #777;
+  margin-bottom: 15px;
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+}
+
+button {
+  width: 100%;
+  margin-top: 15px;
+  padding: 14px;
+  border: none;
+  border-radius: 10px;
+  background: #e91e63;
+  color: white;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Juliana Limpeza Premium</h1>
+<p class="sub">Preencha e receba seu orçamento no WhatsApp</p>
+
+<input id="nome" placeholder="Seu nome">
+<input id="telefone" placeholder="WhatsApp">
+<input id="bairro" placeholder="Bairro">
+
+<select id="imovel">
+<option>Tamanho do imóvel</option>
+<option>Flat / Studio</option>
+<option>Apê pequeno até 70m²</option>
+<option>Apê médio 71 a 100m²</option>
+<option>Casa grande 100m²+</option>
+</select>
+
+<select id="servico">
+<option>Serviço desejado</option>
+<option>Limpeza padrão</option>
+<option>Limpeza pesada</option>
+<option>Pós-festa</option>
+<option>Limpeza de mudança completa (chegada)</option>
+<option>Limpeza de mudança de imóvel vazio (saída)</option>
+<option>Lavar roupas</option>
+<option>Passar roupas</option>
+<option>Limpeza Padrão + Roupas</option>
+<option>Limpeza Pesada + Roupas</option>
+<option>Limpeza Padrão + Passar</option>
+<option>Limpeza Pesada + Passar</option>
+<option>Limpeza Padrão + Lavar e Passar</option>
+<option>Limpeza Pesada + Lavar e Passar</option>
+</select>
+
+<select id="quartos">
+<option>Quantidade de quartos</option>
+<option>1</option>
+<option>2</option>
+<option>3</option>
+<option>4 ou mais</option>
+</select>
+
+<select id="banheiros">
+<option>Quantidade de banheiros</option>
+<option>1</option>
+<option>2</option>
+<option>3</option>
+<option>4 ou mais</option>
+</select>
+
+<input id="data" type="date">
+
+<select id="horario">
+<option>Horário</option>
+<option>Manhã</option>
+<option>Tarde</option>
+</select>
+
+<textarea id="obs" placeholder="Observações"></textarea>
+
+<button onclick="enviar()">Solicitar Orçamento Grátis</button>
+
+</div>
+
+<script>
+function formatarData(dataISO) {
+  if (!dataISO) return "";
+  const partes = dataISO.split("-");
+  return `${partes[2]}/${partes[1]}/${partes[0]}`;
+}
+
+function enviar() {
+
+  const dados = {
+    nome: document.getElementById("nome").value,
+    whatsapp: document.getElementById("telefone").value,
+    bairro: document.getElementById("bairro").value,
+    imovel: document.getElementById("imovel").value,
+    servico: document.getElementById("servico").value,
+    quartos: document.getElementById("quartos").value,
+    banheiros: document.getElementById("banheiros").value,
+    dataServico: formatarData(document.getElementById("data").value),
+    horario: document.getElementById("horario").value,
+    observacoes: document.getElementById("obs").value
+  };
+
+  fetch("https://script.google.com/macros/s/AKfycbxl-nMrU7iJMTHoLSkdWrOBJmvOYfspMNptJ5ZKXG_OUlyfFAqgKAjJIZc1v3YTkaCMWg/exec", {
+    method: "POST",
+    mode: "no-cors",
+    body: JSON.stringify(dados)
+  });
+
+  const msg = `Olá Juliana, gostaria de solicitar um orçamento:
+
+Nome: ${dados.nome}
+WhatsApp: ${dados.whatsapp}
+Bairro: ${dados.bairro}
+
+Imóvel: ${dados.imovel}
+Quartos: ${dados.quartos}
+Banheiros: ${dados.banheiros}
+
+Serviço: ${dados.servico}
+
+Data: ${dados.dataServico}
+Horário: ${dados.horario}
+
+Observações: ${dados.observacoes}`;
+
+  const url = "https://wa.me/5583993718356?text=" + encodeURIComponent(msg);
+
+  window.open(url, "_blank");
+}
+</script>
+
+</body>
+</html>
