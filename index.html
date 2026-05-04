@@ -53,6 +53,13 @@ input, select, textarea {
   font-size: 14px;
 }
 
+.label {
+  display: block;
+  margin-top: 12px;
+  font-size: 13px;
+  color: #555;
+}
+
 button {
   width: 100%;
   margin-top: 15px;
@@ -84,7 +91,7 @@ button:hover {
 <input id="bairro" placeholder="Bairro">
 
 <select id="imovel">
-<option>Tamanho do imóvel</option>
+<option disabled selected>Tamanho do imóvel</option>
 <option>Flat / Studio</option>
 <option>Apê pequeno até 70m²</option>
 <option>Apê médio 71 a 100m²</option>
@@ -92,7 +99,7 @@ button:hover {
 </select>
 
 <select id="servico">
-<option>Serviço desejado</option>
+<option disabled selected>Serviço desejado</option>
 <option>Limpeza padrão</option>
 <option>Limpeza pesada</option>
 <option>Pós-festa</option>
@@ -109,7 +116,7 @@ button:hover {
 </select>
 
 <select id="quartos">
-<option>Quantidade de quartos</option>
+<option disabled selected>Quantidade de quartos</option>
 <option>1</option>
 <option>2</option>
 <option>3</option>
@@ -117,17 +124,18 @@ button:hover {
 </select>
 
 <select id="banheiros">
-<option>Quantidade de banheiros</option>
+<option disabled selected>Quantidade de banheiros</option>
 <option>1</option>
 <option>2</option>
 <option>3</option>
 <option>4 ou mais</option>
 </select>
 
-<input id="data" type="date">
+<label for="data" class="label">Data do serviço</label>
+<input id="data" type="date" required>
 
 <select id="horario">
-<option>Horário</option>
+<option disabled selected>Horário</option>
 <option>Manhã</option>
 <option>Tarde</option>
 </select>
@@ -146,6 +154,11 @@ function formatarData(dataISO) {
 }
 
 function enviar() {
+
+  if (!document.getElementById("data").value) {
+    alert("Selecione a data do serviço");
+    return;
+  }
 
   const dados = {
     nome: document.getElementById("nome").value,
