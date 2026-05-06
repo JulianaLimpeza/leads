@@ -76,13 +76,6 @@ button {
 button:hover {
   opacity: 0.9;
 }
-
-.aviso {
-  font-size: 12px;
-  text-align: center;
-  color: #777;
-  margin-top: 10px;
-}
 </style>
 </head>
 
@@ -93,8 +86,8 @@ button:hover {
 <h1>Juliana Limpeza Premium</h1>
 <p class="sub">Preencha e receba seu orçamento no WhatsApp</p>
 
-<input id="nome" placeholder="Seu nome" required>
-<input id="telefone" placeholder="WhatsApp" required>
+<input id="nome" placeholder="Seu nome">
+<input id="telefone" placeholder="WhatsApp">
 <input id="bairro" placeholder="Bairro">
 
 <select id="imovel">
@@ -151,10 +144,6 @@ button:hover {
 
 <button onclick="enviar()">Solicitar Orçamento Grátis</button>
 
-<p class="aviso">
-Por favor, preencha com dados reais para receber seu orçamento.
-</p>
-
 </div>
 
 <script>
@@ -194,12 +183,14 @@ function enviar() {
     observacoes: document.getElementById("obs").value
   };
 
+  // envia pra planilha (silencioso)
   fetch("https://script.google.com/macros/s/AKfycbxl-nMrU7iJMTHoLSkdWrOBJmvOYfspMNptJ5ZKXG_OUlyfFAqgKAjJIZc1v3YTkaCMWg/exec", {
     method: "POST",
     mode: "no-cors",
     body: JSON.stringify(dados)
   });
 
+  // abre WhatsApp direto (principal)
   const msg = `Olá Juliana, gostaria de solicitar um orçamento:
 
 Nome: ${dados.nome}
@@ -219,10 +210,7 @@ Observações: ${dados.observacoes}`;
 
   const url = "https://wa.me/5583993718356?text=" + encodeURIComponent(msg);
 
-  // 👉 TELINHA AQUI
-  if (confirm("✅ Orçamento enviado com sucesso!\n\nClique em OK para falar no WhatsApp.")) {
-    window.open(url, "_blank");
-  }
+  window.open(url, "_blank");
 }
 </script>
 
